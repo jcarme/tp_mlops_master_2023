@@ -23,8 +23,13 @@ Une fois votre repository créé, récupérez le en local sur votre machine et c
 
 Le rôle de ces fichiers est le suivant:
 * _README.md_ contient la documentation, en anglais. Il doit permettre à n'importe quel nouvel utilisateur de pouvoir comprendre et utilise votre projet de manière immédiate. Maintenez-le à jour tout au long de l'évolutiond e votre projet.
-* _requirements.txt_ contient l'ensemble des package nécessaires au focntionnement de votre projet, un par ligne, de préférence versionnés.
 * _notebooks_ est un dossier qui contient l'ensemble des notebooks que vous allez créer.
+* _requirements.txt_ contient l'ensemble des package nécessaires au fonctionnement de votre projet, un par ligne, de préférence versionnés.
+
+L'intérêt de _requirements.txt_ est qu'il permet l'installation, dans l'environnement en cours, de l'ensemble de packages requis en une commande:
+```
+pip install -r requirements.txt
+```
 
 D'autres fichiers et dossiers seront ajoutés au fur et à mesure à cette structure initiale.
 
@@ -83,7 +88,7 @@ Créez un Pipeline scikit-learn contenant à la fois le prétraitement et la cr�
 ## Expérimentation de différents modèles et hyperparamètres
 
 Testez différents paramétrages de l'algorithme LogisticRegression. Vous pouvez en particulier jouer avec les paramêtres _C_ et _penalty_.
-Testez différents algorithmes d'apprentissage, par exemple _SVC_ et _MLP_.
+Testez différents algorithmes d'apprentissage, par exemple _SVC_ et _MLP_, et cherchez à tester différents hyperparamètres. Par exemple, vous pouvez tester plusieurs structure de réseau en _MLP_.
 
 Chaque expérimentation soit être précédée d'un paragraphe explicatif. Une description textuelle courte doit également être sauvegardée dans MLFlow.
 
@@ -99,7 +104,7 @@ Ne faites pas d'effort particulier sur le reporting des résultats, car ce sera 
 Quelques conseils sur l'utilisation de _hyperopt_:
 * Vous devez utiliser la fonction `hyperopt.fmin` avec comme argument, entre autres, la fonction `fn` à minimiser, que nous appeleront `objective`. Cette fonction doit effectuer un entrainement et renvoyer le résultat de l'évaluation sur le _validation set_. **Attention** il faut renvoyer une valeur à minimiser, vous pouvez par exemple prendre `1-accuracy`
 * Gardez une valeur de `max_evals` très basse, par exemple 10 pour tester, car sinon le temps de calcul risque d'être trop long pour pouvoir être effectué pendant la durée du TP.
-* Il est conseillé d'éviter de recalculer le preprocessing dans la fonction `objective`, sauf si vous cherchez à optimiser un paramètre du proprocessing.
+* Il est conseillé d'éviter de recalculer le preprocessing dans la fonction `objective`, sauf si vous cherchez à optimiser un paramètre du proprocessing. C'est cependant plus complexe à implémenter.
 
 
 
