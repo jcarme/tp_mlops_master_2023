@@ -7,5 +7,6 @@ Le but n'est pas essentiellement la conception d'un modèle le plus performant p
 Séances:
 
 * [Séance 1 - Environnement - Création du modèle](./mlops1.md)
+* [Séance 2 - MLFlow Tracking](./mlops2.md)
 
 
