@@ -84,7 +84,6 @@ Nous allons écrire dans un nouveau notebook `model_design_3.ipynb` une fonction
     def build_model(
         training_set,
         pipeline,
-        model_name,
         mlflow_run_tags = None,
         mlflow_run_parameters = None,
         mlflow_run_description = None,
