@@ -94,7 +94,6 @@ Nous allons écrire dans un nouveau notebook `model_design_3.ipynb` une fonction
     Build a sentiment analysis model, print the evaluation result and store everything to MLFlow
     @param: training_set: pandas dataframe containing the input training set
     @param: pipeline: scikit-learn pipeline that will be applied to the input data
-    @param: model_name: name of the model as it will be stored in MLFlow
     @param: mlflow_run_tags: dict of tags that will be stored in the MLFlow run
     @param: mlflow_run_parameters: dict of parameters that will be stored in the MLFlow run
     @param: mlflow_run_description: textual description of the run
@@ -125,11 +124,11 @@ En utilisation les fonctionnalités de l'interface, adaptez la tableau de bord �
 
 Créez une fonction `build_optimized_model` la capacité de trouver les hyper parametres optimaux au moyen de la bibliothèque `hyperopt`. Pour plus de détails, consultez la section "Optimisation des hyper-paramètres" du TP précédent.
 
-En plus des paramètres de la fonction `build_model`, votre fonction `build_optimized_model` devra recevoir l'ensemble de validation et l'espace d'optimisation tel que demandé par la fonction `hyperopt.fmin`. Les paramètres 
+En plus des paramètres de la fonction `build_model`, votre fonction `build_optimized_model` devra recevoir l'ensemble de validation et l'espace d'optimisation tel que demandé par la fonction `hyperopt.fmin`.
 
 La fonction `objective` qu'_hyperopt_ va minimiser doit être une fonction calculée sur __l'ensemble de validation__. Plus elle est faible, meilleure est le modèle, typiquement, vous pouvez renvoyer `1-accuracy`.
 
-Enfin, une fois le paramétrage optimal trouvé, le modèle final doit être reconstruit (ce qu'_hyperopt_ ne fait pas), loggué, en enregistré dans le _mlflow registry_.
+Enfin, une fois le paramétrage optimal trouvé, le modèle final doit être reconstruit (ce qu'_hyperopt_ ne fait pas), loggué, et renvoyé en retour de la fonction.
 
 ### Logging MLFlow
 
