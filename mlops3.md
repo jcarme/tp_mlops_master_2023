@@ -1,5 +1,12 @@
 # Tests, scripts, automatisation
 
+# Makefile
+
+Vous allez créer un Makefile avec les cibles suivantes:
+- `build_dev_requirements`: compile votre fichier `requirements.in` en `requirements.txt`
+- `install_dev_requirements`: installe les dépendances définies dans le fichier `requirements.txt`
+- `install`: install votre package, lorsque vous le créerez dans la suite de ce TP
+
 # Tests
 
 Vous allez commencer par écrire un jeu de test fondé sur le _framework_ `pytest`, qui sera executé sur chaque modèle avant qu'il ne puisse être passé en production.
@@ -27,7 +34,7 @@ Les deux derniers tests seront executés en option si les variables d'environnem
 
 Depuis vos notebook existant, définissez un modèle _baseline_, par exemple en prenant LogisticRegression et Tfidf avec la configuration par défaut. Enregistrez la dans le _MLFlow Registry_ avec un nom dédié, par exemple `sentiment-analyzer-baseline`.
 
-## Executez les tests
+## Executer les tests
 
 Pour démarrer, executez la commande suivante:
 
@@ -39,9 +46,26 @@ TEST_MODEL_NAME=sentiment-analyzer TEST_MODEL_VERSION=5 TEST_FILE=./data/francai
 
 ## Structurez votre projet
 
-Les scripts python que vous allez écrire doivent pouvoir être installés pour être ensuite utilisés de n'importe ou en ligne de commande. Pour cela nous allons utiliser `setuptools`.
+Nous allons créer un package Python pour nos scripts, de manière à pouvoir les executer de n'improte quel emplacement.
 
-Ajoutez un fichier vide `__init__.py`  dans le repertoire `src` pour faire de votre projet un package python
+Pour cela:
+* Installez `setuptools`, qui est la bibliothèque de création des packages
+* Structurez votre code source ainsi:
+
+```
+racine_projet
+|- src
+   |- <nom_du_package>
+      |- __init__.py
+      |- <votre_code_source>.py
+|- setup.py
+|- requirements.txt
+|- README.md
+...
+
+```
+ 
+Le fichier (possiblement vide) `__init__.py`  dans le repertoire `src` fait du repertoire un package python
 
 Ecrivez ensuite un fichier `setup.py` à la racine de votre projet dont le contenu pourrait être:
 ```
@@ -50,24 +74,25 @@ from setuptools import setup, find_packages
 setup(
     name='sentiment analyzer',
     version='0.1',
-    packages=find_packages(),
+    packages=find_packages(where='src'),
+    package_dir={"":"src"},    
     install_requires=[
-        # Add your project dependencies here
+        # project dependancies
     ],
     entry_points={
         'console_scripts': [
-            'predict=src.predict_cli:main' #assuming predict is the command you want to install and src/predict_cli:main its source file
+            '<your_entry_point>=<your_package>.<your_source_file>:<your_function>'
         ],
     },
 )
 ```
 
-Placez ensuite chacun de vos scripts python dans le folder `src`. Par exemple, avec le code ci-dessus, si vous placez dans `src` un programme `predict_cli` avec une fonction `main`, celle-ci sera executée, une fois votre package installé, quand vous appelerez la commande `predict` en ligne de commande. Ajoutez chacune de vos commande ainsi dans `console_script`.
-
 Vous pouvez ensuite installer le package avec la commande suivante:
 ```
 pip install -e .
 ```
+
+Mettez votre `Makefile` à jour.
 
 ## Prediction 
 
@@ -83,7 +108,9 @@ Utilisez `click` pour gérer les arguments. Voici les arguments que vous devirez
 
 Exactement un des arguments `--text` et `--input_file` doit être fourni.
 
-Ecrivez la fonction `main` dans un fichier source `src/predict_cli.py` mais implémentez les différentes fonctionnalités dans une classe dédiée `ModelManager` dans un fichier `src/model_manager.py`. Vous vous en reservirez plus tard.
+Ecrivez la fonction `main` dans un fichier source `predict.py` mais implémentez les différentes fonctionnalités dans une classe dédiée `ModelManager` dans un fichier `model_manager.py`. Vous vous en reservirez plus tard.
+
+Créez un _entry point_ dans votre package pour votre commande `predict`.
 
 ## Promotion
 
@@ -93,15 +120,17 @@ Il doit prendre en paramètre ces arguments :
 
 - `--model_name`, nom du modèle tel qu'il apparaît dans le registre MLFlow
 - `--model_version`, version du modèle telle qu'elle apparaît dans le registre MLFlow
-- `--status`, le statut auquel le modèle est promu: `staging`, `prod` ou `archive`
+- `--status`, le statut auquel le modèle est promu: `Staging`, `Production` ou `Archived`
 
 A noter que:
 - Un modèle ne peut être promu que d'un statut au suivant.
 - Un modèle ne peut être promu en `prod` que s'il passe les tests précédemment définis.
 
+Créez un _entry point_ dans votre package pour votre commande `promote`.
+
 ## Réapprentissage
 
-Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement.
+Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement, au moyen d'une commande que nous nommerons `retrain`
 
 Camme nous utilisons des pipelines _scikit-learn_, nous devons simplement charger le modèle et exécuter `fit` à nouveau. Une fois appris, le tag retrained doit être défini sur True. L'implémentation peut être effectuée dans la classe `ModelManager`, comme pour la commande `Prediction`.
 
@@ -119,3 +148,4 @@ Ces tags doivent être définis :
 - `training_set_id`, si il a été fourni.
 Si le modèle est enregistré dans _MLFLow_, les tags doivent être associés au modèle et au _run_. Sinon, uniquement au _run_.
 
+Créez un _entry point_ dans votre package pour votre commande `retrain`.
