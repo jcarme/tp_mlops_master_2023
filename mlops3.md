@@ -114,7 +114,7 @@ Créez un _entry point_ dans votre package pour votre commande `predict`.
 
 ## Promotion
 
-Créez un script `promote.sh` qui promeut un modèle dans le registre MLFlow.
+Créez un script `promote.py` qui promeut un modèle dans le registre MLFlow.
 
 Il doit prendre en paramètre ces arguments :
 
@@ -130,7 +130,7 @@ Créez un _entry point_ dans votre package pour votre commande `promote`.
 
 ## Réapprentissage
 
-Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement, au moyen d'une commande que nous nommerons `retrain`
+Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement, au moyen d'une commande python que nous nommerons `retrain`
 
 Camme nous utilisons des pipelines _scikit-learn_, nous devons simplement charger le modèle et exécuter `fit` à nouveau. Une fois appris, le tag retrained doit être défini sur True. L'implémentation peut être effectuée dans la classe `ModelManager`, comme pour la commande `Prediction`.
 
