@@ -102,9 +102,11 @@ https://github.com/hyperopt/hyperopt
 Ne faites pas d'effort particulier sur le reporting des résultats, car ce sera l'objet de travaux ulterieurs avec la bibliothèque MLFlow.
 
 Quelques conseils sur l'utilisation de _hyperopt_:
-* Vous devez utiliser la fonction `hyperopt.fmin` avec comme argument, entre autres, la fonction `fn` à minimiser, que nous appeleront `objective`. Cette fonction doit effectuer un entrainement et renvoyer le résultat de l'évaluation sur le _validation set_. **Attention** il faut renvoyer une valeur à minimiser, vous pouvez par exemple prendre `1-accuracy`
-* Gardez une valeur de `max_evals` très basse, par exemple 10 pour tester, car sinon le temps de calcul risque d'être trop long pour pouvoir être effectué pendant la durée du TP.
-* Il est conseillé d'éviter de recalculer le preprocessing dans la fonction `objective`, sauf si vous cherchez à optimiser un paramètre du proprocessing. C'est cependant plus complexe à implémenter.
+* Vous devez utiliser la fonction `hyperopt.fmin` avec comme arguments obligatoires:
+  * `fn`, la fonction à minimiser, que nous appeleront `objective`. Cette fonction doit effectuer un entrainement et renvoyer le résultat de l'évaluation sur le _validation set_. **Attention** il faut renvoyer une valeur à minimiser, vous pouvez par exemple prendre `1-accuracy`
+  * `space`, l'espace de recherche des hyperparamètres. Consultez la documentation de fmin (https://github.com/hyperopt/hyperopt/wiki/FMin) pour voir comment le définir. Dans le cas d'un _pipeline_ _scikit-learn_ les    paramètres sont définit ainsi: le paramètre `C` de l'étape du pipeline nommée `logreg` est nommé `logreg__C`
+  * `max_evals`, le nombre maximal d'itératons. Prenez une valeur très basse pour tester, par exemple 10, car sinon le temps de calcul risque d'être trop long pour pouvoir être effectué pendant la durée du TP. Vous pourrez ensuite le laisser tourner avec une valeur beaucoup plus grande, si vous en avez la possibilité.
+  * Si vous utilisez `hp.choice` dans votre espace de recherche, utiliser `return_argmin=False` en argument de `fmin`
 
 
 
