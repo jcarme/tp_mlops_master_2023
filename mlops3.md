@@ -72,7 +72,7 @@ Ecrivez ensuite un fichier `setup.py` à la racine de votre projet dont le conte
 from setuptools import setup, find_packages
 
 setup(
-    name='sentiment analyzer',
+    name='sentiment_analyzer',
     version='0.1',
     packages=find_packages(where='src'),
     package_dir={"":"src"},    
