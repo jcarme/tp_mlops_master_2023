@@ -72,7 +72,7 @@ Ecrivez ensuite un fichier `setup.py` à la racine de votre projet dont le conte
 from setuptools import setup, find_packages
 
 setup(
-    name='sentiment analyzer',
+    name='sentiment_analyzer',
     version='0.1',
     packages=find_packages(where='src'),
     package_dir={"":"src"},    
@@ -148,7 +148,7 @@ Créez un _entry point_ dans votre package pour votre commande `promote`.
 
 ## Réapprentissage
 
-Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement, au moyen d'une commande que nous nommerons `retrain`
+Nous voulons pouvoir réentraîner automatiquement un modèle à partir de nouvelles données sans changer sa configuration d'entraînement, au moyen d'une commande python que nous nommerons `retrain`
 
 Camme nous utilisons des pipelines _scikit-learn_, nous devons simplement charger le modèle et exécuter `fit` à nouveau. Une fois appris, le tag retrained doit être défini sur True. L'implémentation peut être effectuée dans la classe `ModelManager`, comme pour la commande `Prediction`.
 
