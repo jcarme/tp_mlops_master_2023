@@ -50,12 +50,12 @@ Nous allons créer un package Python pour nos scripts, de manière à pouvoir le
 
 Pour cela:
 * Installez `setuptools`, qui est la bibliothèque de création des packages
-* Structurez votre code source ainsi:
+* Structurez votre code source ainsi, en supposant que le package soit nommé _sentiment_analyzer_:
 
 ```
 racine_projet
 |- src
-   |- <nom_du_package>
+   |- sentiment_analyzer
       |- __init__.py
       |- <votre_code_source>.py
 |- setup.py
@@ -114,6 +114,23 @@ Créez un _entry point_ dans votre package pour votre commande `predict`.
 
 ## Promotion
 
+### Ajouter les tests dans le package
+
+Nous souhaitons que le script que nous allons créer ait la capacité d'executer les tests sur le modèle à promouvoir.
+
+Pour cela, nous devons déplacer les tests dans le package afin qu'il soit accessible aux utilisateurs du package une fois installé. Déplacez le dossier `tests` and le dossier `src/sentiment_analyzer`.
+
+Pour que le dossier `tests` soit correctement packagé, il faut en faire un _sub-package_, c'est à dire qu'il faut créer dans le dossier tests un fichier vide `__init__.py`
+
+Enfin, au sein de votre scripts `promote`, une fois les variables d'environnement correctement settées, vous pourrez appeler `pytest` en lui donnant en argument le repertoire ou les tests sont stockés, ce qui pourra se faire ainsi:
+
+```
+test_result = subprocess.run(
+    ["pytest",pkg_resources.resource_filename('src', "./tests")], capture_output=False)
+```
+
+### Implémenter le script
+
 Créez un script `promote.sh` qui promeut un modèle dans le registre MLFlow.
 
 Il doit prendre en paramètre ces arguments :
@@ -121,6 +138,7 @@ Il doit prendre en paramètre ces arguments :
 - `--model_name`, nom du modèle tel qu'il apparaît dans le registre MLFlow
 - `--model_version`, version du modèle telle qu'elle apparaît dans le registre MLFlow
 - `--status`, le statut auquel le modèle est promu: `Staging`, `Production` ou `Archived`
+- `--test-set`, le dataset de test, nécessiare pour le passage en Production.
 
 A noter que:
 - Un modèle ne peut être promu que d'un statut au suivant.
