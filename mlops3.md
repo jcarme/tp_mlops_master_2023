@@ -126,7 +126,7 @@ Enfin, au sein de votre scripts `promote`, une fois les variables d'environnemen
 
 ```
 test_result = subprocess.run(
-    ["pytest",pkg_resources.resource_filename('sentiment_analyzer', "./tests")], capture_output=False)
+    ["pytest",pkg_resources.resource_filename('src', "./tests")], capture_output=False)
 ```
 
 ### Implémenter le script

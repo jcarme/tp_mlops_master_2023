@@ -1,5 +1,3 @@
-
-
 # Séance 1
 
 ## Mise en place de l'environnement

@@ -1,4 +1,4 @@
-# Séance 4 - Deployement
+# Séance 4 - Webapp et conteneurisation
 
 ## Créer une webapp "sentiment-analyzer"
 
@@ -109,12 +109,12 @@ Le Dockerfile doit implémenter les étapes suivantes:
 Vous pouvez ensuite compiler votre dockerfile avec la commande (que vous pourrez mettre dans un script):
 ```
 docker build 
-    -t sentiment-analyzer:<TAG>
+    -t sentiment-analyzer:<VERSION>
     --build-arg <PARAMETER_1>=<VALUE_1>
     --build-arg <PARAMETER_2>=<VALUE_2>
     .
 ```
-Pour la valeur de <TAG>, je suggère d'utiliser la convention <CODE_VERSION>-<MODEL_NAME>-<MODEL_VERSION>, qui permet de voir instantanément dan sla liste des images Docker de quelle version du code et du modèle il s'agit.
+Pour la valeur de \<VERSION\>, je suggère d'utiliser la convention <CODE_VERSION>-<MODEL_NAME>-<MODEL_VERSION>, qui permet de voir instantanément dan sla liste des images Docker de quelle version du code et du modèle il s'agit.
 Pour les <PARAMETER_N>, il s'agit des paramètres utilisés dans votre Dockerfile.
 
 __Attention!__, les commandes executées dans le dockerfile le sont dans le conteneur qui a sa propre adresse réseau, elles n'ont pas directement accès à votre `localhost`. Pour l'adresse de votre server MLFlow, vous devez utilisez l'adresse du `host` et non `localhost`. Pour cela, vous pouvez utiliser l'adresse speciale `host.docker.internal`. Votre server MLFLow aura donc l'adresse `http://host.docker.internal:5000`
@@ -126,12 +126,12 @@ Il vous reste à executer votre conteneur et vérifier son bon fonctionnement.
 Pour cela, executez la commande:
 ```
 docker run 
-    -p 8080:8000 
+    -p 8001:8000 
     --name <CONTAINER_NAME>
     <IMAGE_NAME>
 ```
 
-Le `-p 8001:8000` vous permet de rediriger le port 8000 de votre conteneur (celui sur lequel on accède à la webapp) vers le port 8001 de votre host. Vous pouvez ensuite accéder à votre webapp dans le conteneur depuis votre navigateur à l'adresse `http://localhost:8001`
+Le `-p 8001:8000` vous permet de rediriger le port 8001 de votre host vers le port 8000 de votre conteneur (celui sur lequel la webapp est exposée). Vous pouvez ensuite accéder à votre webapp dans le conteneur depuis votre navigateur à l'adresse `http://localhost:8001`
 
 Vous pouvez également, pour débugger ou par curiosité, executer un shell dans votre conteneur ainsi:
 ```
