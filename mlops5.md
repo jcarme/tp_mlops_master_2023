@@ -61,7 +61,7 @@ PREDICTON_CONTAINER="sentiment-analyzer:<YOUR_VERSION>" docker-compose up
 Nous allons stocker l'ensemble des entrées/sorties de l'utilisateur dans MongoDB pour analyse ultérieure. Au delà du stockage des entrée-sorties, Mongo peut plus généralement être utilisé pour stocker l'ensemble des métriques générées par l'application.
 
 Vous allez ajouter dans votre `docker-compose.yml` un service `mongodb` utilisant l'image `mongodb:latest`. Pensez à spécifier les éléments suivants:
-- Les variables d'enironnement `MONGO_INITDB_ROOT_USERNAME` et `MONGO_INITDB_ROOT_PASSWORD` 
+- Les variables d'environnement `MONGO_INITDB_ROOT_USERNAME` et `MONGO_INITDB_ROOT_PASSWORD` 
 - Le volume `mongo-data` montée sur le répertoire `/data/db` du conteneur, permettant de stocker les données _Mongo_ dans un volume _docker_. C'est important car sans cela les données de Mongo sont seulement stockée dans le conteneur et disparaissent à sa destruction. 
 
 ### Modification de votre application
