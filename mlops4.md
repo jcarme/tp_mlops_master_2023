@@ -1,4 +1,4 @@
-# Séance 4 - Webapp et conteneurisation
+# Séance 4 - Web-service, déploiement
 
 ## Créer une webapp "sentiment-analyzer"
 
