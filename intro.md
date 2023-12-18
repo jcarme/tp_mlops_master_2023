@@ -10,6 +10,7 @@ Séances:
 * [Séance 2 - MLFlow Tracking](./mlops2.md)
 * [Séance 3 - Tests, scripts, automatisation](./mlops3.md)
 * [Séance 4 - Web-service, déploiement](./mlops4.md)
-* [Séance 5 - Frontend, backend, orchestration](mlops5.md)
+* [Séance 5 - Frontend, backend, orchestration](./mlops5.md)
+* [Séance 6 - Huggingface, Github, Docker Hub](./mlops6.md)
 
 
