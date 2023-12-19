@@ -61,12 +61,12 @@ ARG HF_ID
 ARG MODEL_NAME
 ARG MODEL_VERSION
 
-RUN python -c "from skops import hub_utils; hub_utils.download(repo_id='${HF_ID}/${MODEL_NAME}-${MODEL_VERSION}', dst='/model.pkl')"
+RUN python -c "from skops import hub_utils; hub_utils.download(repo_id='${HF_ID}/${MODEL_NAME}-${MODEL_VERSION}', dst='/model')"
 COPY app.py ./
 EXPOSE 80
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
 ```
-- Adaptez `app.py` pour charger le modèle en utilisant `joblib.load` à la place de `mlflow.sklearn.load_model` pour charger directement le fichier `/model.pkl`
+- Adaptez `app.py` pour charger le modèle en utilisant `joblib.load` à la place de `mlflow.sklearn.load_model` pour charger directement le fichier `/model/model.pkl`
 
 Vous pouvez maintenant construire la nouvelle image en utilisant `docker build`, de la même façon que dans la séance précédente. Donnez lui un nom différent comme `sentiment_analyzer-webapp-hf`. Vous pouvez ensuite la tester en déployant votre application `docker-compose` avec cette nouvelle image.
 
